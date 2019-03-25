@@ -14,7 +14,7 @@ else
 end
 
 if chNum == 4
-    assignin('base','data',data)
+    %assignin('base','data',data)
     pics = nan(1,4,size(data{1,1},1)/4,size(data{1,1}{1,1},1),size(data{1,1}{1,1},2));
     
     for i = 4:4:size(data{1,1},1)
@@ -34,6 +34,25 @@ if chNum == 4
     distX = metadata.get('Global Scaling|Distance|Value #1');
     Zdist = str2double(distZ)*1e6;
     Xdist = str2double(distX)*1e6;
+elseif chNum == 3
+    %assignin('base','data',data)
+    pics = nan(1,4,size(data{1,1},1)/3,size(data{1,1}{1,1},1),size(data{1,1}{1,1},2));
+    
+    for i = 3:3:size(data{1,1},1)
+        pics(1,1,i/3,:,:) = data{1,1}{i,1};
+    end
+    for i = 1:3:size(data{1,1},1)
+        pics(1,3,(i+2)/3,:,:) = data{1,1}{i,1};
+    end
+    for i = 2:3:size(data{1,1},1)
+        pics(1,2,(i+1)/3,:,:) = data{1,1}{i,1};
+    end
+        
+    distZ = metadata.get('Global Scaling|Distance|Value #3');
+    distX = metadata.get('Global Scaling|Distance|Value #1');
+    Zdist = str2double(distZ)*1e6;
+    Xdist = str2double(distX)*1e6;
+    errEv = 2;
 else
     errEv = 1;
     pics = [];
@@ -41,4 +60,3 @@ else
     Xdist = [];
     return
 end
-
